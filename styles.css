@@ -1,0 +1,174 @@
+:root {
+  --primary: #FF5E5B;
+  --secondary: #00CECB;
+  --accent: #FFED66;
+  --dark: #2D3047;
+  --light: #FDFFFC;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  color: var(--light);
+  overflow-x: hidden;
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+              url('https://iili.io/3Zh9vPn.jpg') center/cover no-repeat fixed;
+}
+
+.game-container {
+  text-align: center;
+  background: rgba(45, 48, 71, 0.85);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  min-height: 300px;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+h1 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.game-info {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1.5rem;
+  background: rgba(0, 206, 203, 0.1);
+  padding: 0.8rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 206, 203, 0.3);
+}
+
+.game-info p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.game-info span {
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.timer-options, .mode-selector {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.timer-btn, .mode-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+}
+
+.timer-btn.active, .mode-btn.active {
+  transform: scale(1.05);
+}
+
+.mode-btn.easy { background: #00CECB; }
+.mode-btn.medium { background: #FFED66; color: #333; }
+.mode-btn.hard { background: #FF5E5B; }
+.mode-btn.expert { background: #A267AC; }
+
+.target {
+  width: 100px;
+  height: 100px;
+  background: var(--primary);
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  position: absolute;
+  transition: all 0.1s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 3px solid var(--light);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+#start-btn, #stop-btn {
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(255, 94, 91, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#start-btn {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+#stop-btn {
+  background: linear-gradient(to right, #FF5E5B, #FF8E8B);
+}
+
+#start-btn:hover, #stop-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 7px 20px rgba(255, 94, 91, 0.6);
+}
+
+#start-btn:disabled, #stop-btn:disabled {
+  background: #666;
+  transform: none;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.social-share {
+  margin-top: 2rem;
+  display: none;
+}
+
+.share-btn {
+  padding: 0.6rem 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 50px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.share-btn.twitter { background: #1DA1F2; color: white; }
+.share-btn.facebook { background: #4267B2; color: white; }
+.share-btn:hover { transform: translateY(-2px); }
+
+@media (max-width: 500px) {
+  h1 { font-size: 1.8rem; }
+  .game-info { flex-direction: column; gap: 0.5rem; }
+  .timer-options, .mode-selector { gap: 0.3rem; }
+  .timer-btn, .mode-btn { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+}

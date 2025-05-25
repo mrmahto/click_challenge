@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Ultimate Click Challenge 🔥</title>
+    <style>
+        :root {
+            --primary: #FF5E5B;
+            --secondary: #00CECB;
+            --accent: #FFED66;
+            --dark: #2D3047;
+            --light: #FDFFFC;
+        }
+        
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://iili.io/3Zh9vPn.jpg') center/cover no-repeat fixed;
+        }
+        
+        .game-container {
+            text-align: center;
+            background: rgba(45, 48, 71, 0.85);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            min-height: 300px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            background: rgba(0, 206, 203, 0.1);
+            padding: 0.8rem;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 206, 203, 0.3);
+        }
+        
+        .game-info p {
+            margin: 0;
+            font-weight: 600;
+        }
+        
+        .game-info span {
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        .timer-options {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .timer-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .timer-btn.active {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+        
+        .mode-selector {
+            margin: 1rem 0;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .mode-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        
+        .mode-btn.active {
+            transform: scale(1.05);
+        }
+        
+        .mode-btn.easy {
+            background: #00CECB;
+        }
+        
+        .mode-btn.medium {
+            background: #FFED66;
+            color: #333;
+        }
+        
+        .mode-btn.hard {
+            background: #FF5E5B;
+        }
+        
+        .mode-btn.expert {
+            background: #A267AC;
+        }
+        
+        .target {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            position: absolute;
+            transition: all 0.1s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 3px solid var(--light);
+        }
+        
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        #start-btn, #stop-btn {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 94, 91, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        #start-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        #stop-btn {
+            background: linear-gradient(to right, #FF5E5B, #FF8E8B);
+        }
+        
+        #start-btn:hover, #stop-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 94, 91, 0.6);
+        }
+        
+        #start-btn:disabled, #stop-btn:disabled {
+            background: #666;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .social-share {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .share-btn {
+            padding: 0.6rem 1.2rem;
+            margin: 0 0.5rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .share-btn.twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+        
+        .share-btn.facebook {
+            background: #4267B2;
+            color: white;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 500px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .game-info {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .timer-options, .mode-selector {
+                gap: 0.3rem;
+            }
+            
+            .timer-btn, .mode-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>🔥 Ultimate Click Challenge 🔥</h1>
+        
+        <div class="timer-options">
+            <button class="timer-btn active" data-time="30">30 Sec</button>
+            <button class="timer-btn" data-time="60">1 Min</button>
+            <button class="timer-btn" data-time="120">2 Min</button>
+            <button class="timer-btn" data-time="300">5 Min</button>
+        </div>
+        
+        <div class="mode-selector">
+            <button class="mode-btn easy active" data-mode="easy">Easy</button>
+            <button class="mode-btn medium" data-mode="medium">Medium</button>
+            <button class="mode-btn hard" data-mode="hard">Hard</button>
+            <button class="mode-btn expert" data-mode="expert">Expert</button>
+        </div>
+        
+        <div class="game-info">
+            <p>Time: <span id="time">30</span>s</p>
+            <p>Clicks: <span id="score">0</span></p>
+            <p>High Score: <span id="high-score">0</span></p>
+        </div>
+        
+        <div id="target" class="target"></div>
+        
+        <div class="button-group">
+            <button id="start-btn"><i class="fas fa-play"></i> Start Challenge</button>
+            <button id="stop-btn" disabled><i class="fas fa-stop"></i> Stop Game</button>
+        </div>
+        
+        <div class="social-share" id="social-share">
+            <h3>Share your score!</h3>
+            <button class="share-btn twitter" onclick="shareScore('twitter')">
+                <i class="fab fa-twitter"></i> Twitter
+            </button>
+            <button class="share-btn facebook" onclick="shareScore('facebook')">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Game configuration
+        const modeSettings = {
+            easy: { size: 100, speed: 800, name: "Easy" },
+            medium: { size: 70, speed: 700, name: "Medium" },
+            hard: { size: 50, speed: 600, name: "Hard" },
+            expert: { size: 30, speed: 500, name: "Expert" }
+        };
+
+        // Game state
+        const gameState = {
+            score: 0,
+            timeLeft: 30,
+            isRunning: false,
+            selectedTime: 30,
+            currentMode: 'easy',
+            intervals: {
+                timer: null,
+                movement: null
+            }
+        };
+
+        // DOM elements
+        const elements = {
+            target: document.getElementById('target'),
+            scoreDisplay: document.getElementById('score'),
+            timeDisplay: document.getElementById('time'),
+            highScoreDisplay: document.getElementById('high-score'),
+            startBtn: document.getElementById('start-btn'),
+            stopBtn: document.getElementById('stop-btn'),
+            socialShare: document.getElementById('social-share'),
+            timerButtons: document.querySelectorAll('.timer-btn'),
+            modeButtons: document.querySelectorAll('.mode-btn')
+        };
+
+        // Initialize game
+        function initGame() {
+            const savedScore = localStorage.getItem('highScore');
+            elements.highScoreDisplay.textContent = savedScore || 0;
+            setupEventListeners();
+        }
+
+        // Cleanup intervals
+        function cleanupGame() {
+            clearInterval(gameState.intervals.timer);
+            clearTimeout(gameState.intervals.movement);
+            gameState.intervals.timer = null;
+            gameState.intervals.movement = null;
+        }
+
+        // Start game
+        function startGame() {
+            if (gameState.isRunning) return;
+            
+            // Reset game state
+            gameState.isRunning = true;
+            gameState.score = 0;
+            gameState.timeLeft = gameState.selectedTime;
+            
+            // Update UI
+            elements.scoreDisplay.textContent = gameState.score;
+            elements.timeDisplay.textContent = gameState.timeLeft;
+            elements.startBtn.disabled = true;
+            elements.stopBtn.disabled = false;
+            elements.socialShare.style.display = 'none';
+            
+            // Disable settings changes
+            elements.timerButtons.forEach(btn => btn.disabled = true);
+            elements.modeButtons.forEach(btn => btn.disabled = true);
+            
+            // Setup target
+            const size = modeSettings[gameState.currentMode].size;
+            elements.target.style.width = `${size}px`;
+            elements.target.style.height = `${size}px`;
+            elements.target.style.display = 'block';
+            
+            // Start game systems
+            startTimer();
+            moveTarget();
+        }
+
+        // Stop game (manual)
+        function stopGame() {
+            if (!gameState.isRunning) return;
+            
+            cleanupGame();
+            resetGameState();
+            
+            // Reset timer display
+            elements.timeDisplay.textContent = gameState.selectedTime;
+        }
+
+        // End game (natural completion)
+        function endGame() {
+            cleanupGame();
+            
+            // Update high score
+            const highScore = localStorage.getItem('highScore') || 0;
+            if (gameState.score > highScore) {
+                localStorage.setItem('highScore', gameState.score);
+                elements.highScoreDisplay.textContent = gameState.score;
+            }
+            
+            // Show share options
+            elements.socialShare.style.display = 'block';
+            
+            resetGameState();
+        }
+
+        // Reset game state
+        function resetGameState() {
+            gameState.isRunning = false;
+            
+            // Update UI
+            elements.target.style.display = 'none';
+            elements.startBtn.disabled = false;
+            elements.stopBtn.disabled = true;
+            
+            // Re-enable settings
+            elements.timerButtons.forEach(btn => btn.disabled = false);
+            elements.modeButtons.forEach(btn => btn.disabled = false);
+        }
+
+        // Timer system
+        function startTimer() {
+            gameState.intervals.timer = setInterval(() => {
+                gameState.timeLeft--;
+                elements.timeDisplay.textContent = gameState.timeLeft;
+                
+                if (gameState.timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+        }
+
+        // Target movement
+        function moveTarget() {
+            if (!gameState.isRunning) return;
+            
+            const container = document.querySelector('.game-container');
+            const containerRect = container.getBoundingClientRect();
+            const settings = modeSettings[gameState.currentMode];
+            const size = settings.size;
+            
+            // Calculate boundaries
+            const padding = 20;
+            const maxX = containerRect.width - size - padding;
+            const maxY = containerRect.height - size - padding;
+            
+            // Random position
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+            
+            // Apply movement
+            elements.target.style.transition = `left ${settings.speed}ms ease-out, top ${settings.speed}ms ease-out`;
+            elements.target.style.left = `${randomX}px`;
+            elements.target.style.top = `${randomY}px`;
+            elements.target.style.backgroundColor = getRandomColor();
+            
+            // Schedule next move
+            gameState.intervals.movement = setTimeout(moveTarget, settings.speed);
+        }
+
+        // Generate random color
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Share score
+        function shareScore(platform) {
+            const modeName = modeSettings[gameState.currentMode].name;
+            const text = `I scored ${gameState.score} clicks in ${gameState.selectedTime} seconds on ${modeName} mode! Can you beat me?`;
+            const url = window.location.href;
+            
+            if (platform === 'twitter') {
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+            } else if (platform === 'facebook') {
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(text)}`, '_blank');
+            }
+        }
+
+        // Event listeners
+        function setupEventListeners() {
+            // Start/Stop buttons
+            elements.startBtn.addEventListener('click', startGame);
+            elements.stopBtn.addEventListener('click', stopGame);
+            
+            // Target click
+            elements.target.addEventListener('click', () => {
+                if (!gameState.isRunning) return;
+                
+                gameState.score++;
+                elements.scoreDisplay.textContent = gameState.score;
+                
+                // Visual feedback
+                const scale = gameState.currentMode === 'expert' ? 0.7 : 
+                            gameState.currentMode === 'hard' ? 0.75 :
+                            gameState.currentMode === 'medium' ? 0.8 : 0.85;
+                
+                elements.target.style.transform = `scale(${scale})`;
+                setTimeout(() => {
+                    elements.target.style.transform = 'scale(1)';
+                }, 100);
+                
+                // Immediate move in timed modes
+                if (modeSettings[gameState.currentMode].speed > 0) {
+                    clearTimeout(gameState.intervals.movement);
+                    moveTarget();
+                }
+            });
+            
+            // Timer selection
+            elements.timerButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    elements.timerButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    gameState.selectedTime = parseInt(button.dataset.time);
+                    elements.timeDisplay.textContent = gameState.selectedTime;
+                });
+            });
+            
+            // Mode selection
+            elements.modeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (gameState.isRunning) return;
+                    
+                    elements.modeButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    gameState.currentMode = button.dataset.mode;
+                });
+            });
+        }
+
+        // Initialize the game
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
